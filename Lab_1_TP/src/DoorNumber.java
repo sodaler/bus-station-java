@@ -1,18 +1,17 @@
 public enum DoorNumber {
-    three,
-    four,
-    five;
 
-    public static DoorNumber getNumber(int number) {
-        switch(number) {
-            case 3:
-                return three;
-            case 4:
-                return four;
-            case 5:
-                return five;
-            default:
-                return null;
-        }
+    three(3),
+    four(4),
+    five(5);
+
+    private int number;
+
+    DoorNumber(int number) {
+        this.number = number;
     }
+
+    public int getNumber() {
+        return number;
+    }
+
 }
