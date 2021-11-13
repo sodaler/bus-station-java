@@ -1,14 +1,14 @@
-import java.awt.Graphics;
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
 
 public class Draw extends JPanel {
+
     private Bus bus;
 
     public void paintComponent(Graphics g) {
-        if (this.bus != null) {
-            this.bus.DrawTransport(g);
+        if (bus != null) {
+            bus.DrawTransport(g);
         }
-
     }
 
     public void setBus(Bus ex) {
@@ -16,6 +16,7 @@ public class Draw extends JPanel {
     }
 
     public Bus getBus() {
-        return this.bus;
+        return bus;
     }
+
 }
