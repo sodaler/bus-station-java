@@ -1,23 +1,26 @@
-
 import javax.swing.*;
 import java.awt.*;
 
 public class PanelBusStation extends JPanel {
 
-    private final BusStation<Bus, DopDoor> busStation;
+    private final BusStationCollection busStationCollection;
+    private String selectedItem = null;
 
     protected void paintComponent(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
-        if (busStation != null) {
-            busStation.drawBusStation(g2);
+        if (selectedItem != null) {
+            Graphics2D g2 = (Graphics2D) g;
+            if (busStationCollection != null) {
+                busStationCollection.get(selectedItem).drawBusStation(g2);
+
+            }
         }
     }
 
-    public BusStation<Bus, DopDoor> getBusStation() {
-        return busStation;
+    public void setSelectedItem(String selectedItem) {
+        this.selectedItem = selectedItem;
     }
 
-    public PanelBusStation(BusStation<Bus, DopDoor> busStation) {
-        this.busStation = busStation;
+    public PanelBusStation(BusStationCollection busStationCollection) {
+        this.busStationCollection = busStationCollection;
     }
 }
