@@ -1,9 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class FormBus extends JFrame {
 
-    private JButton createBusButton;
+
+    private JButton createTrackedButton;
     private JButton createDoubleDeckerButton;
     private JButton upButton;
     private JButton leftButton;
@@ -11,9 +13,10 @@ public class FormBus extends JFrame {
     private JButton downButton;
     private JComboBox<Integer> choiceShapeDoorButton;
     private JComboBox<Integer> choiceDoorNumberButton;
-    private Bus bus;
+    private ITransport bus;
     private JFrame frame;
-    private Draw draw;
+    public Draw draw;
+
 
     public void direction(JButton button) {
         String temp = button.getName();
@@ -37,45 +40,33 @@ public class FormBus extends JFrame {
     }
 
     public void initialization() {
-        ImageIcon up = new ImageIcon("src/Images/up.jpg");
-        ImageIcon down = new ImageIcon("src/Images/down.jpg");
-        ImageIcon left = new ImageIcon("src/Images/left.jpg");
-        ImageIcon right = new ImageIcon("src/Images/right.jpg");
-        Image imgTake = up.getImage();
-        Image turnScale = imgTake.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-        up = new ImageIcon(turnScale);
+        Icon up = new ImageIcon("Images/up.png");
+        Icon down = new ImageIcon("Images/down.png");
+        Icon left = new ImageIcon("Images/left.png");
+        Icon right = new ImageIcon("Images/right.png");
         upButton = new JButton(up);
         upButton.setName("Up");
         upButton.setBounds(750, 300, 40, 40);
         upButton.addActionListener(e -> direction(upButton));
 
-        imgTake = down.getImage();
-        turnScale = imgTake.getScaledInstance(50, 55, Image.SCALE_SMOOTH);
-        down = new ImageIcon(turnScale);
         downButton = new JButton(down);
         downButton.setName("Down");
         downButton.setBounds(750, 350, 40, 40);
         downButton.addActionListener(e -> direction(downButton));
 
-        imgTake = right.getImage();
-        turnScale = imgTake.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-        right = new ImageIcon(turnScale);
         rightButton = new JButton(right);
         rightButton.setName("Right");
         rightButton.setBounds(800, 350, 40, 40);
         rightButton.addActionListener(e -> direction(rightButton));
 
-        imgTake = left.getImage();
-        turnScale = imgTake.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-        left = new ImageIcon(turnScale);
         leftButton = new JButton(left);
         leftButton.setName("Left");
         leftButton.setBounds(700, 350, 40, 40);
         leftButton.addActionListener(e -> direction(leftButton));
 
-        createBusButton = new JButton("Автобус");
-        createBusButton.setBounds(10, 0, 130, 30);
-        createBusButton.addActionListener(e -> {
+        createTrackedButton = new JButton("Автобус");
+        createTrackedButton.setBounds(10, 0, 130, 30);
+        createTrackedButton.addActionListener(e -> {
             bus = new Bus(300 + ((int) (Math.random() * 300)), 800 + ((int) (Math.random() * 2000)), Color.BLACK, 160, 120);
             bus.setPosition(10 + ((int) (Math.random() * 100)), 10 + ((int) (Math.random() * 100)), 900, 500);
             draw.setBus(bus);
@@ -86,7 +77,7 @@ public class FormBus extends JFrame {
         createDoubleDeckerButton.setBounds(160, 0, 170, 30);
         createDoubleDeckerButton.addActionListener(e -> {
             bus = new DoubleDecker(300 + ((int) (Math.random() * 300)), 800 + ((int) (Math.random() * 2000)), Color.BLACK, Color.RED,
-                    true, true,  choiceDoorNumberButton.getSelectedIndex() + 3, choiceShapeDoorButton.getSelectedIndex() + 3);
+                    true, true,  2, 1);
             bus.setPosition(10 + ((int) (Math.random() * 100)), 10 + ((int) (Math.random() * 100)), 900, 500);
             draw.setBus(bus);
             frame.repaint();
@@ -100,14 +91,15 @@ public class FormBus extends JFrame {
     }
 
     public FormBus() {
+        Random rnd = new Random();
         draw = new Draw();
         frame = new JFrame("Автобус");
         frame.setSize(900, 500);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        //frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
         frame.setResizable(false);
         initialization();
-        frame.getContentPane().add(createBusButton);
+        frame.getContentPane().add(createTrackedButton);
         frame.getContentPane().add(createDoubleDeckerButton);
         frame.getContentPane().add(upButton);
         frame.getContentPane().add(downButton);
@@ -120,7 +112,31 @@ public class FormBus extends JFrame {
         frame.repaint();
     }
 
+    public void setBus(ITransport bus)
+    {
+        Random rnd = new Random();
+        bus.setPosition(rnd.nextInt(100) + 10, rnd.nextInt(100) + 40, 140, 190);
+        draw.setBus(bus);
+        frame.repaint();
+    }
+
+    @Override
+    public void paint(Graphics g)
+    {
+        super.paint(g);
+        if(bus != null) {
+            bus.DrawTransport(g);
+        }
+    }
+
+    @Override
+    public void repaint()
+    {
+        super.repaint();
+    }
+
     public static void main(String[] args) {
+
         FormBus form = new FormBus();
     }
 }

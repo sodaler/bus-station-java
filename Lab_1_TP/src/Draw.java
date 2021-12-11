@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class Draw extends JPanel {
 
-    private Bus bus;
+    private ITransport bus;
 
     public void paintComponent(Graphics g) {
         if (bus != null) {
@@ -11,11 +11,11 @@ public class Draw extends JPanel {
         }
     }
 
-    public void setBus(Bus ex) {
+    public void setBus(ITransport ex) {
         this.bus = ex;
     }
 
-    public Bus getBus() {
+    public ITransport getBus() {
         return bus;
     }
 
