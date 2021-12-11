@@ -5,10 +5,20 @@ public class Bus extends Vehicle {
     protected int busWidth = 160;
     protected int busHeight = 120;
 
-    public Bus(int maxSpeed, float weight, Color mainColor, int busWidth, int busHeight) {
+    public DopDoor dopDoor;
+
+    public Bus(int maxSpeed, int weight, Color mainColor) {
         this.MaxSpeed = maxSpeed;
         this.Weight = weight;
         this.MainColor = mainColor;
+    }
+
+    protected Bus(int maxSpeed, int weight, Color mainColor, int busWidth,
+                  int busHeight)
+    {
+        MaxSpeed = maxSpeed;
+        Weight = weight;
+        MainColor = mainColor;
         this.busWidth = busWidth;
         this.busHeight = busHeight;
     }
@@ -51,7 +61,6 @@ public class Bus extends Vehicle {
 
     @Override
     public void DrawTransport(Graphics g) {
-
         g.setColor(MainColor);
 
         //кузов
