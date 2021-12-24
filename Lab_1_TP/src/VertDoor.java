@@ -4,17 +4,14 @@ public class VertDoor implements DopDoor{
 
     private DoorNumber doorNumber;
 
+    @Override
     public void setNumber(int number) {
 
-        if(number == DoorNumber.three.getNumber()) {
-            doorNumber = DoorNumber.three;
-        }
-        else if (number == DoorNumber.four.getNumber()) {
-            doorNumber = DoorNumber.four;
-        }
-        else {
-            doorNumber = DoorNumber.five;
-        }
+        this.doorNumber = DoorNumber.getNumber(number);
+    }
+
+    public VertDoor(int number) {
+        setNumber(number);
     }
 
     @Override

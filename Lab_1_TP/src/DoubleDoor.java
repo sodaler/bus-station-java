@@ -7,15 +7,11 @@ public class DoubleDoor implements DopDoor{
     @Override
     public void setNumber(int number) {
 
-        if(number == DoorNumber.three.getNumber()) {
-            doorNumber = DoorNumber.three;
-        }
-        else if (number == DoorNumber.four.getNumber()) {
-            doorNumber = DoorNumber.four;
-        }
-        else {
-            doorNumber = DoorNumber.five;
-        }
+        this.doorNumber = DoorNumber.getNumber(number);
+    }
+
+    public DoubleDoor(int number) {
+        setNumber(number);
     }
 
     @Override
