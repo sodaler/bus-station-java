@@ -4,17 +4,15 @@ public class RectDoor implements DopDoor{
 
     private DoorNumber doorNumber;
 
+
+    @Override
     public void setNumber(int number) {
 
-        if(number == DoorNumber.three.getNumber()) {
-            doorNumber = DoorNumber.three;
-        }
-        else if (number == DoorNumber.four.getNumber()) {
-            doorNumber = DoorNumber.four;
-        }
-        else {
-            doorNumber = DoorNumber.five;
-        }
+        this.doorNumber = DoorNumber.getNumber(number);
+    }
+
+    public RectDoor(int number) {
+        setNumber(number);
     }
 
     @Override
