@@ -46,6 +46,37 @@ public class DoubleDecker extends Bus {
         this.SecondFloor = secondFloor;
     }
 
+    public DoubleDecker(String info) {
+        String[] args = info.split(separator);
+        if (args.length == 8) {
+            MaxSpeed = Integer.parseInt(args[0]);
+            Weight = Float.parseFloat(args[1]);
+            MainColor = new Color(Integer.parseInt(args[2]));
+            DopColor = new Color(Integer.parseInt(args[3]));
+            HasDopDoor = Boolean.parseBoolean(args[4]);
+            HeadLight = Boolean.parseBoolean(args[5]);
+            SecondFloor = Boolean.parseBoolean(args[6]);
+            if (args[7].contains("null")) {
+                DopDoor = null;
+            } else {
+                String[] argsAdditionalElems = args[7].split("\\.");
+                int number = Integer.parseInt(argsAdditionalElems[1]);
+                switch (argsAdditionalElems[0]) {
+                    case "RectDoor":
+                        DopDoor = new RectDoor(number);
+                        break;
+                    case "VertDoor":
+                        DopDoor = new VertDoor(number);
+                        break;
+                    case "DoubleDoor":
+                        DopDoor = new DoubleDoor(number);
+                        break;
+                }
+            }
+        }
+    }
+
+
     @Override
     public void DrawTransport(Graphics g) {
 
@@ -69,5 +100,9 @@ public class DoubleDecker extends Bus {
         if (DopDoor != null) {
             DopDoor.draw(g, _startPosX, _startPosY, 300, 400);
         }
+    }
+
+    public String toString() {
+        return MaxSpeed + separator + Weight + separator + MainColor.getRGB() + separator + DopColor.getRGB() + separator + HasDopDoor + separator + HeadLight + separator + SecondFloor + separator + DopDoor;
     }
 }

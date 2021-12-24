@@ -15,6 +15,8 @@ public class RectDoor implements DopDoor{
         setNumber(number);
     }
 
+
+
     @Override
     public void draw(Graphics g, int _startPosX, int _startPosY, int busWidth, int busHeight) {
         if (doorNumber == DoorNumber.three || doorNumber == DoorNumber.four || doorNumber == DoorNumber.five) {
@@ -30,6 +32,10 @@ public class RectDoor implements DopDoor{
 
             g.drawRect(_startPosX + 45, _startPosY + 50, 15, 30);
         }
+    }
+
+    public String toString() {
+        return this.getClass().getSimpleName() + '.' + doorNumber.ordinal();
     }
 
 }

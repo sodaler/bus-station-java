@@ -91,4 +91,8 @@ public class BusStation<T extends ITransport, H extends DopDoor> {
         }
         return null;
     }
+
+    public void clear() {
+        _places.clear();
+    }
 }

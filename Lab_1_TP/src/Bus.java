@@ -7,6 +7,8 @@ public class Bus extends Vehicle {
 
     public DopDoor dopDoor;
 
+    protected String separator = ";";
+
     public Bus(int maxSpeed, int weight, Color mainColor) {
         this.MaxSpeed = maxSpeed;
         this.Weight = weight;
@@ -16,11 +18,24 @@ public class Bus extends Vehicle {
     protected Bus(int maxSpeed, int weight, Color mainColor, int busWidth,
                   int busHeight)
     {
-        MaxSpeed = maxSpeed;
-        Weight = weight;
-        MainColor = mainColor;
+        this.MaxSpeed = maxSpeed;
+        this.Weight = weight;
+        this.MainColor = mainColor;
         this.busWidth = busWidth;
         this.busHeight = busHeight;
+    }
+
+    public Bus(String info) {
+        String[] args = info.split(separator);
+        if (args.length == 3)
+        {
+            MaxSpeed = Integer.parseInt(args[0]);
+            Weight = Float.parseFloat(args[1]);
+            MainColor = new Color(Integer.parseInt(args[2]));
+        }
+    }
+
+    public Bus() {
     }
 
     @Override
@@ -75,5 +90,8 @@ public class Bus extends Vehicle {
         g.drawOval(_startPosX + 140, _startPosY + 45, 15, 20);
     }
 
+    public String toString() {
+        return MaxSpeed + separator + Weight + separator + MainColor.getRGB();
+    }
 
 }
