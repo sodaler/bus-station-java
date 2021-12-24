@@ -14,6 +14,7 @@ public class VertDoor implements DopDoor{
         setNumber(number);
     }
 
+
     @Override
     public void draw(Graphics g, int _startPosX, int _startPosY, int busWidth, int busHeight) {
         g.setColor(Color.GRAY);
@@ -39,5 +40,9 @@ public class VertDoor implements DopDoor{
             g.fillRect(_startPosX + 45, _startPosY + 50, 7, 30);
             g.fillRect(_startPosX + 54, _startPosY + 50, 6, 30);
         }
+    }
+
+    public String toString() {
+        return this.getClass().getSimpleName() + '.' + doorNumber.ordinal();
     }
 }

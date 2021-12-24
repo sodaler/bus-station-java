@@ -14,6 +14,8 @@ public class DoubleDoor implements DopDoor{
         setNumber(number);
     }
 
+
+
     @Override
     public void draw(Graphics g, int _startPosX, int _startPosY, int busWidth, int busHeight) {
         g.setColor(Color.DARK_GRAY);
@@ -34,5 +36,9 @@ public class DoubleDoor implements DopDoor{
             g.fillRect(_startPosX + 45, _startPosY + 50, 15, 15);
             g.drawRect(_startPosX + 45, _startPosY + 50, 15, 30);
         }
+    }
+
+    public String toString() {
+        return this.getClass().getSimpleName() + '.' + doorNumber.ordinal();
     }
 }

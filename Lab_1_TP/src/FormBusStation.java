@@ -1,6 +1,7 @@
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Queue;
@@ -83,12 +84,32 @@ public class FormBusStation {
         buttonAddToQueue.setBounds(10, 70, 180, 30);
         buttonGetFromQueue.setBounds(10, 110, 180, 30);
 
+        JMenuBar menu = new JMenuBar();
+        frame.setJMenuBar(menu);
+        JMenu menuFile = new JMenu("Файл");
+        JMenuItem fileItemSave = new JMenuItem("Сохранить");
+        JMenuItem fileItemLoad = new JMenuItem("Загрузить");
+        JMenu menuBusStation = new JMenu("Автовокзал");
+        JMenuItem busStationItemSave = new JMenuItem("Сохранить автовокзал");
+        JMenuItem busStationItemLoad = new JMenuItem("Загрузить автовокзал");
+        menuFile.add(fileItemSave);
+        menuFile.add(fileItemLoad);
+        menuBusStation.add(busStationItemSave);
+        menuBusStation.add(busStationItemLoad);
+        menu.add(menuFile);
+        menu.add(menuBusStation);
+
         buttonParkBus.addActionListener(e -> parkBus());
         buttonAddToQueue.addActionListener(e -> takeBus());
         buttonGetFromQueue.addActionListener(e -> getBus());
         buttonAddBusStation.addActionListener(e -> addBusStation());
         buttonDeleteBusStation.addActionListener(e -> deleteBusStation());
         listBoxBusStation.addListSelectionListener(e -> listListener());
+        fileItemSave.addActionListener(e -> save());
+        fileItemLoad.addActionListener(e -> load());
+        busStationItemSave.addActionListener(e -> saveBusStation());
+        busStationItemLoad.addActionListener(e -> loadBusStation());
+
 
         frame.repaint();
     }
@@ -108,6 +129,7 @@ public class FormBusStation {
             JOptionPane.showMessageDialog(frame, "Автовокзал не выбран", "Ошибка", JOptionPane.ERROR_MESSAGE);
         }
     }
+
 
     private void takeBus() {
         if (listBoxBusStation.getSelectedIndex() >= 0) {
@@ -151,8 +173,7 @@ public class FormBusStation {
         int itemsCount = busStationList.size();
         if (itemsCount > 0 && (index < 0 || index >= itemsCount)) {
             listBoxBusStation.setSelectedIndex(0);
-        }
-        else if (index >= 0 && index < itemsCount) {
+        } else if (index >= 0 && index < itemsCount) {
             listBoxBusStation.setSelectedIndex(index);
         }
     }
@@ -184,5 +205,68 @@ public class FormBusStation {
     private void listListener() {
         panelBusStation.setSelectedItem(listBoxBusStation.getSelectedValue());
         frame.repaint();
+    }
+
+    private void save() {
+        JFileChooser fileDialog = new JFileChooser();
+        fileDialog.setFileFilter(new FileNameExtensionFilter("Текстовый файл", "txt"));
+        int result = fileDialog.showSaveDialog(frame);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            if (busStationCollection.saveData(fileDialog.getSelectedFile().getPath())) {
+                JOptionPane.showMessageDialog(frame, "Сохранение прошло успешно");
+            }
+            else {
+                JOptionPane.showMessageDialog(frame, "Не удалось сохранить");
+            }
+        }
+
+    }
+
+    private void load() {
+        JFileChooser fileDialog = new JFileChooser();
+        fileDialog.setFileFilter(new FileNameExtensionFilter("Текстовый файл", "txt"));
+        int result = fileDialog.showOpenDialog(frame);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            if (busStationCollection.loadData(fileDialog.getSelectedFile().getPath())) {
+                JOptionPane.showMessageDialog(frame, "Загрузка прошла успешно");
+                reloadLevels();
+                frame.repaint();
+            }
+            else {
+                JOptionPane.showMessageDialog(frame,"Не удалось загрузить файл");
+            }
+        }
+    }
+
+    private void saveBusStation() {
+        JFileChooser fileDialog = new JFileChooser();
+        fileDialog.setFileFilter(new FileNameExtensionFilter("Текстовый файл", "txt"));
+        if (listBoxBusStation.getSelectedValue() == null) {
+            JOptionPane.showMessageDialog(frame, "Перед сохранением необходимо выбрать автовокзал");
+            return;
+        }
+        int result = fileDialog.showSaveDialog(frame);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            if (busStationCollection.saveBusStation(fileDialog.getSelectedFile().getPath(), listBoxBusStation.getSelectedValue())) {
+                JOptionPane.showMessageDialog(frame, "Сохранение прошло успешно", "Результат", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(frame, "Не удалось сохранить", "Ошибка", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void loadBusStation() {
+        JFileChooser fileDialog = new JFileChooser();
+        fileDialog.setFileFilter(new FileNameExtensionFilter("Текстовый файл", "txt"));
+        int result = fileDialog.showOpenDialog(frame);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            if (busStationCollection.loadBusStation(fileDialog.getSelectedFile().getPath())) {
+                JOptionPane.showMessageDialog(frame, "Загрузка прошла успешно", "Результат", JOptionPane.INFORMATION_MESSAGE);
+                reloadLevels();
+                frame.repaint();
+            } else {
+                JOptionPane.showMessageDialog(frame, "Не удалось загрузить файл", "Ошибка", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 }
